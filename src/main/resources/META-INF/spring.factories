@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-org.simtp.example.starter.library.ExampleConfiguration
+io.github.vexagonverp.keycloaktoken.KeycloakTokenConfiguration
