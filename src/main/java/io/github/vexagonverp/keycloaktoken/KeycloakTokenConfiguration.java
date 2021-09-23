@@ -1,57 +1,57 @@
 package io.github.vexagonverp.keycloaktoken;
 
+import org.keycloak.adapters.springsecurity.client.KeycloakRestTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @ComponentScan
 @ConditionalOnProperty(value = "io.github.vexagonverp.keycloaktoken.config.enabled", havingValue = "true", matchIfMissing = true)
 public class KeycloakTokenConfiguration {
 
-    private String keycloakServerUrl="http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:8080}/auth";
+    private static String keycloakServerUrl = "http://localhost:8080/auth";
 
-    private String adminUsername="admin";
-    private String adminPassword="admin";
-    private String adminClient="admin-cli";
-    private String adminGrant="password";
-    private String adminRealm="master";
-
-    private RestTemplate restTemplate;
+    private static String adminUsername = "admin";
+    private static String adminPassword = "admin";
+    private static String adminClient = "admin-cli";
+    private static String adminGrant = "password";
+    private static String adminRealm = "master";
+    @Autowired
+    private KeycloakRestTemplate keycloakRestTemplate;
 
     public void setKeycloakServerUrl(String keycloakServerUrl) {
-        this.keycloakServerUrl = keycloakServerUrl;
+        KeycloakTokenConfiguration.keycloakServerUrl = keycloakServerUrl;
     }
 
     public void setAdminUsername(String adminUsername) {
-        this.adminUsername = adminUsername;
+        KeycloakTokenConfiguration.adminUsername = adminUsername;
     }
 
     public void setAdminPassword(String adminPassword) {
-        this.adminPassword = adminPassword;
+        KeycloakTokenConfiguration.adminPassword = adminPassword;
     }
 
     public void setAdminClient(String adminClient) {
-        this.adminClient = adminClient;
+        KeycloakTokenConfiguration.adminClient = adminClient;
     }
 
     public void setAdminGrant(String adminGrant) {
-        this.adminGrant = adminGrant;
+        KeycloakTokenConfiguration.adminGrant = adminGrant;
     }
 
     public void setAdminRealm(String adminRealm) {
-        this.adminRealm = adminRealm;
+        KeycloakTokenConfiguration.adminRealm = adminRealm;
     }
-
 
     // Create your Bean definitions here
     @Bean
-    public KeycloakToken myBean() {
-        return new KeycloakToken(restTemplate,keycloakServerUrl,
-                adminUsername,adminPassword,
-                adminClient,adminGrant,
+    public KeycloakToken keycloakToken() {
+        return new KeycloakToken(keycloakRestTemplate, keycloakServerUrl,
+                adminUsername, adminPassword,
+                adminClient, adminGrant,
                 adminRealm);
     }
 }

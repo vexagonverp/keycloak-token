@@ -1,19 +1,19 @@
 package io.github.vexagonverp.keycloaktoken;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.keycloak.adapters.springsecurity.client.KeycloakRestTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 
 public class KeycloakToken {
     private static String ACCESS_TOKEN;
     private static String REFRESH_TOKEN;
-    private final RestTemplate restTemplate;
+    private final KeycloakRestTemplate restTemplate;
     private final String keycloakServerUrl;
 
     private final String adminUsername;
@@ -23,13 +23,13 @@ public class KeycloakToken {
     private final String adminRealm;
 
     @Autowired
-    public KeycloakToken(RestTemplate restTemplate,
-                                String keycloakServerUrl,
-                                String adminUsername,
-                                String adminPassword,
-                                String adminClient,
-                                String adminGrant,
-                                String adminRealm) {
+    public KeycloakToken(KeycloakRestTemplate restTemplate,
+                         String keycloakServerUrl,
+                         String adminUsername,
+                         String adminPassword,
+                         String adminClient,
+                         String adminGrant,
+                         String adminRealm) {
         this.restTemplate = restTemplate;
         this.keycloakServerUrl = keycloakServerUrl;
         this.adminUsername = adminUsername;
